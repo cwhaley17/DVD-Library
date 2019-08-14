@@ -1,0 +1,117 @@
+﻿
+<div class="row">
+    <div class="col-xs-8 col-xs-offset-4">
+        <div class="col-xs-8 col-xs-offset-4">
+            <button class="btn btn-primary" id="btnShowAddMovie">Add DVD</button>
+        </div>
+        <div id="addDvdModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add DVD</h4>
+
+                        <form class="form-horizontal">
+                            <fieldset>
+
+                                <!-- Form Name -->
+                                <legend></legend>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Title">Title</label>
+                                    <div class="col-md-8">
+                                        <input id="Title" name="Title" type="text" placeholder="Title" class="form-control input-md" required>
+
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="ReleaseDate">Release Date</label>
+                                    <div class="col-md-8">
+                                        <input id="ReleaseDate" name="ReleaseDate" type="text" placeholder="Release Date" class="form-control input-md" required>
+
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="MovieDirector">Director</label>
+                                    <div class="col-md-8">
+                                        <input id="MovieDirector" name="MovieDirector" type="text" placeholder="Director" class="form-control input-md" required>
+
+                                    </div>
+                                </div>
+
+                                <!-- Select Basic -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Rating">Rating</label>
+                                    <div class="col-md-8">
+                                        <select id="Rating" name="Rating" class="form-control">
+                                            <option value="0">-- Rating --</option>
+                                            <option value="1">G</option>
+                                            <option value="2">PG</option>
+                                            <option value="3">PG-13</option>
+                                            <option value="4">R</option>
+                                            <option value="5">NC-17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Studio">Studio</label>
+                                    <div class="col-md-8">
+                                        <input id="Studio" name="Studio" type="text" placeholder="Studio" class="form-control input-md" required>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnSaveDvd" ng-click="save()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-xs-4">
+        <input type="text" placeholder="Search" ng-model="dvdFilter" />
+    </div>
+    <div class="col-xs-8">
+        <table class="table table-striped" id="dvdList">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Rating</th>
+                    <th>Director</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="dvd in dvds | filter: dvdFilter | orderBy: false">
+                    <td class="col-xs-2">{{dvd.Title}}</td>
+                    <td class="col-xs-1">{{dvd.Rating.RatingName}}</td>
+                    <td class="col-xs-1">{{dvd.MovieDirector}}</td>
+                    <td class="col-xs-1"><a href={{dvd.Website}} class="btn btn-primary">IMDb</a></td>
+                    <td class="col-xs-1"><button value={{dvd.DvdId}} class="btn btn-primary" id="btnDelete" ng-click="delete()">Delete</button></td>
+                    <td class="col-xs-1" ng-if="dvd.Loan == false" style="color: green;">
+                        <button class="btn btn-success" id="btnMakeRented" ng-click="update(dvd)">
+                            Release 
+                        </button>
+                    </td>
+                    <td class="col-xs-1" ng-if="dvd.Loan == true" style="color: red;">
+                        <button class="btn btn-danger" id="btnMakeReturned" ng-click="update(dvd)">
+                            Returns
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
